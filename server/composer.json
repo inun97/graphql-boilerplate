@@ -1,0 +1,26 @@
+{
+    "name": "nazir/mygraphqlserver",
+    "description": "server aplikasi graphql",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nazir Arifin",
+            "email": "nazir@unira.ac.id"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "slim/slim": "3.10.0",
+        "usmanhalalit/pixie": "^2.0",
+        "robmorgan/phinx": "^0.10.6",
+        "webonyx/graphql-php": "^0.12.6",
+        "nazir/go2hi": "^1.0"
+    },
+    "autoload": {
+        "classmap": [
+            "Helper/",
+            "Types/"
+        ]
+    }
+}
