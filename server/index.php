@@ -1,6 +1,7 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use \Helper\ControllerHelper as Controller;
 
 header('Access-Control-Allow-Methods: GET, POST');
 require('vendor/autoload.php');
@@ -11,9 +12,8 @@ $app = new \Slim\App([
   'settings' => ['displayErrorDetails' => $envconfig['debugging'] === '1']
 ]);
 
-$app->get('/', function(Request $request, Response $response) use($envconfig) {
-  $response->getBody()->write('<h1>' . $envconfig['apptitle'] . '</h1>');
-  return $response;
+$app->get('/', function() use($envconfig) {
+  Controller::view('index', $envconfig);
 });
 
 // graphql configuration

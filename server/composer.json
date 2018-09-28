@@ -15,12 +15,13 @@
         "usmanhalalit/pixie": "^2.0",
         "robmorgan/phinx": "^0.10.6",
         "webonyx/graphql-php": "^0.12.6",
-        "nazir/go2hi": "^1.0"
+        "nazir/go2hi": "^1.0",
+        "philo/laravel-blade": "^3.1"
     },
     "autoload": {
-        "classmap": [
-            "Helper/",
-            "Types/"
-        ]
+        "psr-4": {
+            "Helper\\": "Helper/",
+            "Types\\": "Types/"
+        }
     }
 }
