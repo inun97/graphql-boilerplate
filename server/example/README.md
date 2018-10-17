@@ -12,7 +12,7 @@ composer install
 
 Sebagai contoh kita akan membuat struktur tabel sesuai dengan diagram ER berikut:
 
-![ER Diagram](/path/to/img.jpg "ER Diagram")
+![ER Diagram](https://github.com/NazirArifin/graphql-boilerplate/blob/master/server/example/resources/erd.png "ER Diagram")
 
 Pada diagram tersebut terdapat enam tabel antara lain fakultas, prodi, dosen, mahasiswa, dsb. Tabel-tabel ini akan dimasukkan di database menggunakan migration dari phinx.
 
