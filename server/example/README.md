@@ -62,16 +62,17 @@ Jika berhasil maka tabel-tabel yang telah dibuat sebelumnya akan terisi dengan d
 
 ## GraphQL Server
 
-Pastikan konfigurasi database di file __dbconfig.ini__ sudah terisi sesuai dengan database yang Anda gunakan. Kita akan membuat tiga "types" secara bersamaan yaitu Fakultas, Prodi dan Dosen. Untuk client yang menguji server graphql contoh ini kita gunakan aplikasi [Insomnia](http://google.com).
+Pastikan konfigurasi database di file __dbconfig.ini__ sudah terisi sesuai dengan database yang Anda gunakan. Untuk client yang menguji server graphql contoh ini kita gunakan aplikasi [Insomnia](https://insomnia.rest/download/). Sedangkan untuk menjalankan GraphQL endpoint yang telah kita buat jika menggunakan PHP local server ketikkan perintah:
+
+```sh
+php -S localhost:8181
+```
+
+Port 8181 bisa diganti sesuai keinginan Anda. Kemudian buka aplikasi insomnia dan buat Request baru dengan method POST dan dilanjutkan dengan memilih GraphQL Query. Kita akan membuat tiga "types" secara bersamaan yaitu Fakultas, Prodi dan Dosen. Ketiga file tersebut sudah ada tinggal Anda lihat cara melakukan query ke database dan bagaimana meresolve datanya.
 
 ### Query
 
 Untuk meminta data dari graphql server kita menggunakan query yang kita masukkan ke aplikasi Insomnia. Contoh query fakultas adalah seperti berikut:
 
-![Query Fakultas](/path/to/img.jpg "Query Fakultas")
-
-Agar query diatas bisa berjalan maka kita perlu mengubah file __Types/QueryType.php__ dan sekaligus membuat file baru __FakultasType.php__
-
-* _QueryType.php_
-
+![Query Fakultas](https://github.com/NazirArifin/graphql-boilerplate/blob/master/server/example/resources/query.png "Query Fakultas")
 
