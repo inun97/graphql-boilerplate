@@ -68,11 +68,47 @@ Pastikan konfigurasi database di file __dbconfig.ini__ sudah terisi sesuai denga
 php -S localhost:8181
 ```
 
-Port 8181 bisa diganti sesuai keinginan Anda. Kemudian buka aplikasi insomnia dan buat Request baru dengan method POST dan dilanjutkan dengan memilih GraphQL Query. Kita akan membuat tiga "types" secara bersamaan yaitu Fakultas, Prodi dan Dosen. Ketiga file tersebut sudah ada tinggal Anda lihat cara melakukan query ke database dan bagaimana meresolve datanya.
+Port 8181 bisa diganti sesuai keinginan Anda. Kemudian buka aplikasi insomnia dan buat Request baru dengan method POST dan dilanjutkan dengan memilih GraphQL Query. Untuk meminta data dari graphql server kita menggunakan query yang kita masukkan  ke aplikasi Insomnia. Contoh query fakultas adalah seperti berikut:
+
+![Query Fakultas](https://github.com/NazirArifin/graphql-boilerplate/blob/master/server/example/resources/query.png "Query Fakultas")
 
 ### Query
 
-Untuk meminta data dari graphql server kita menggunakan query yang kita masukkan ke aplikasi Insomnia. Contoh query fakultas adalah seperti berikut:
+Di folder types sudah terdapat beberapa "types" (selain QueryType, MutationType dan Types) antara lain Fakultas, Prodi dan Dosen. Berikut ini adalah contoh langkah-langkah dalam pembuatan FakultasType:
 
-![Query Fakultas](https://github.com/NazirArifin/graphql-boilerplate/blob/master/server/example/resources/query.png "Query Fakultas")
+1. Lihat file __FakultasType.php__. Di dalamnya terdapat class baru FakultasType yang meng-_extends_ ObjectType. Di _constructor_ bagian variabel config kita masukkan beberapa bagian seperti name, description dan fields. Pastikan memasukkan variabel config ke dalam parent constructor dengan menggunakan ```parent::__constructor($config);```.
+Query juga bisa memiliki argument seperti pada contoh kita menggunakan argumen __id__ untuk menentukan fakultas yang ingin ditampilkan datanya.
+
+2. Setiap kali Anda menambahkan Type baru maka otomatis terdeteksi dan untuk mendapatkan _instance_ dari class Type yang Anda buat maka dapat menggunakan __Types::getType('namatype')__.
+
+2. Tambahkan field 'fakultas' di file __Types/QueryType.php__ bagian config yang berisi fields __type, description, args, dan resolve__. Bagian resolve berisi fungsi anonim yang akan melakukan pencarian data dan mereturn data hasil query berupa array yang kemudian ditampilkan kedalam bentuk json.
+
+### Circular Types
+
+Seringkali di aplikasi yang kita buat terdapat data yang "circular", contohnya adalah di ProdiType yang memiliki field __ketua__ dengan type __dosen__ dimana dosen juga meliki field __prodi__ tersebut. Hal ini akan membuat data berputar-putar karena tiap type saling merujuk satu sama lain. Jika PHP memunculkan error "alokasi memory terlampaui" maka Anda pasti telah membuat circular type seperti ini. Untuk mengatasinya adalah dengan menggunakan callable function seperti contoh di ProdiType:
+
+```php
+...
+'fields' => function() {
+  return [
+    'id' => Type::int(),
+    ...
+```
+
+yang mana berbeda dengan fields di FakultasType yang seperti ini:
+
+```php
+...
+'fields' => [
+   'id' => Type::int(),
+...
+```
+
+## Mutation
+
+
+
+
+
+
 
