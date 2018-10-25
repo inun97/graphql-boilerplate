@@ -170,7 +170,59 @@ class FakultasType extends ObjectType {
     \extract($args);
     \extract($context);
 
+    $id = $fakultas['id'];
+    \extract($fakultas['data']);
 
+    $sukses = true;
+    $errors = [];
+    // cek apakah ada di fakultas
+    $fakultasdb = $qb->table('fakultas')->find($id, 'id_fakultas');
+    if (empty($fakultasdb)) {
+      $sukses = false;
+      $errors[] = 'Data Fakultas Tidak Ditemukan!';
+    }
+
+    // jika ! $sukses
+    if ( ! $sukses) {
+      return [
+        'status' => $sukses,
+        'errors' => $errors,
+        'fakultas' => null
+      ];
+    }
+
+    $upd = [];
+    if ($nama != $fakultasdb->nama_fakultas) {
+      $upd['nama_fakultas'] = $nama;
+    }
+    // update fakultas hanya jika ada perubahan
+    if ( ! empty($upd)) {
+      $qb->table('fakultas')->where('id_fakultas', $id)->update($upd);
+    }
+    
+    // jika ada input dekan, karena tidak required
+    if ( ! empty($dekan)) {
+      $dekandb = $qb->table('jabatandekan')->find($id, 'id_fakultas');
+      if (empty($dekandb)) {
+        // insert karena belum ada dekan sebelumnya
+        $qb->table('jabatandekan')->insert([
+          'id_jabatandekan' => 0,
+          'id_fakultas' => $id,
+          'id_dosen' => $dekan
+        ]);
+      } else {
+        // update dekan
+        $qb->table('jabatandekan')->where('id_jabatandekan', $dekandb->id_jabatandekan)->update([
+          'id_dosen' => $dekan
+        ]);
+      }
+    }
+
+    return [
+      'status' => $sukses,
+      'errors' => $errors,
+      'fakultas' => Types::getType('fakultas')->resolve(['values' => $id, 'args' => $args, 'context' => $context])
+    ];
   }
 
   public function deleteFakultas(array $params) {
@@ -178,6 +230,10 @@ class FakultasType extends ObjectType {
     \extract($args);
     \extract($context);
 
+    // hapus data jabatandekan dulu baru hapus fakultas
+    $qb->table('jabatandekan')->where('id_fakultas', $id)->delete();
+    $qb->table('fakultas')->where('id_fakultas', $id)->delete();
 
+    return true;
   }
 }
