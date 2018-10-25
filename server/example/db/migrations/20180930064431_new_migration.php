@@ -9,12 +9,12 @@ class NewMigration extends AbstractMigration
     public function change()
     {
         $fakultas = $this->table('fakultas', ['id' => false, 'primary_key' => 'id_fakultas']);
-        $fakultas->addColumn('id_fakultas', 'integer', ['limit' => MysqlAdapter::INT_TINY])
+        $fakultas->addColumn('id_fakultas', 'integer', ['identity' => true, 'limit' => MysqlAdapter::INT_TINY])
                  ->addColumn('nama_fakultas', 'string', ['limit' => 100])
                  ->save();
 
         $prodi = $this->table('prodi', ['id' => false, 'primary_key' => 'id_prodi']);
-        $prodi->addColumn('id_prodi', 'integer', ['limit' => MysqlAdapter::INT_TINY])
+        $prodi->addColumn('id_prodi', 'integer', ['identity' => true, 'limit' => MysqlAdapter::INT_TINY])
               ->addColumn('id_fakultas', 'integer', ['limit' => MysqlAdapter::INT_TINY])
               ->addColumn('nama_prodi', 'string', ['limit' => 100])
               ->addColumn('jenjang_prodi', 'string', ['limit' => 40])
@@ -22,7 +22,7 @@ class NewMigration extends AbstractMigration
               ->save();
 
         $dosen = $this->table('dosen', ['id' => false, 'primary_key' => 'id_dosen']);
-        $dosen->addColumn('id_dosen', 'integer', ['limit' => MysqlAdapter::INT_SMALL])
+        $dosen->addColumn('id_dosen', 'integer', ['identity' => true, 'limit' => MysqlAdapter::INT_SMALL])
               ->addColumn('id_prodi', 'integer', ['limit' => MysqlAdapter::INT_TINY])
               ->addColumn('nidn_dosen', 'string', ['limit' => 20])
               ->addColumn('nama_dosen', 'string', ['limit' => 100])
@@ -34,7 +34,7 @@ class NewMigration extends AbstractMigration
               ->save();
 
         $jabatandekan = $this->table('jabatandekan', ['id' => false, 'primary_key' => 'id_jabatandekan']);
-        $jabatandekan->addColumn('id_jabatandekan', 'integer', ['limit' => MysqlAdapter::INT_TINY])
+        $jabatandekan->addColumn('id_jabatandekan', 'integer', ['identity' => true, 'limit' => MysqlAdapter::INT_TINY])
                      ->addColumn('id_fakultas', 'integer', ['limit' => MysqlAdapter::INT_TINY])
                      ->addColumn('id_dosen', 'integer', ['limit' => MysqlAdapter::INT_SMALL])
                      ->addForeignKey('id_fakultas', 'fakultas', 'id_fakultas', $this->myConstraint('fakultas_jabatandekan'))
@@ -42,7 +42,7 @@ class NewMigration extends AbstractMigration
                      ->save();
 
         $jabatankaprodi = $this->table('jabatankaprodi', ['id' => false, 'primary_key' => 'id_jabatankaprodi']);
-        $jabatankaprodi->addColumn('id_jabatankaprodi', 'integer', ['limit' => MysqlAdapter::INT_TINY])
+        $jabatankaprodi->addColumn('id_jabatankaprodi', 'integer', ['identity' => true, 'limit' => MysqlAdapter::INT_TINY])
                        ->addColumn('id_prodi', 'integer', ['limit' => MysqlAdapter::INT_TINY])
                        ->addColumn('id_dosen', 'integer', ['limit' => MysqlAdapter::INT_SMALL])
                        ->addForeignKey('id_prodi', 'prodi', 'id_prodi', $this->myConstraint('prodi_jabatankaprodi'))
@@ -50,7 +50,7 @@ class NewMigration extends AbstractMigration
                        ->save();
 
         $mahasiswa = $this->table('mahasiswa', ['id' => false, 'primary_key' => 'id_mahasiswa']);
-        $mahasiswa->addColumn('id_mahasiswa', 'integer', ['limit' => MysqlAdapter::INT_BIG])
+        $mahasiswa->addColumn('id_mahasiswa', 'integer', ['identity' => true, 'limit' => MysqlAdapter::INT_BIG])
                   ->addColumn('id_prodi', 'integer', ['limit' => MysqlAdapter::INT_TINY])
                   ->addColumn('nim_mahasiswa', 'string', ['limit' => 20])
                   ->addColumn('nama_mahasiswa', 'string', ['limit' => 100])
