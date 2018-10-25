@@ -106,8 +106,11 @@ yang mana berbeda dengan fields di FakultasType yang seperti ini:
 
 ## Mutation
 
+Query digunakan untuk meminta data sebuah Type sedangkan Mutation digunakan untuk menambah, mengubah atau menghapus data dalam Type. Mutation hampir sama dengan Query dengan perbedaan adanya penggunaan ```InputObjectType``` yang digunakan dalam menentukan bentuk input yang diterima ketika melakukan mutation. Untuk membuat input __required__ maka digunakan ```Type::nonNull``` sehingga GraphQL akan menghasilkan error jika input tidak disediakan oleh client. Berikut ini adalah contoh mutation untuk menambah data fakultas:
 
+![Mutation TambahFakultas](https://github.com/NazirArifin/graphql-boilerplate/blob/master/server/example/resources/mutation-add.png "Query Fakultas")
 
+Pada FakultasType terdapat contoh beberapa mutation yaitu tambahFakultas, UpdateFakultas dan hapusFakultas yang mana masing-masing mutation ini memiliki resolver sendiri. Output yang dihasilkan sama dengan saat membuat output untuk Query.
 
 
 
