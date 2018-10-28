@@ -17,8 +17,15 @@ $app->get('/', function() use($envconfig) {
 });
 
 // graphql configuration
-$app->options('/graphql', function(Request $request, Response $response) {});
+$app->options('/graphql', function(Request $request, Response $response) {
+  if (php_sapi_name() === 'cli-server') {
+    header("Access-Control-Allow-Origin: *");
+    header('Access-Control-Allow-Methods: "POST, GET, PUT, DELETE, OPTIONS"');
+    header('Access-Control-Allow-Headers: "Origin, X-Requested-With, Content-Type, Accept, Authorization"');
+  }
+});
 $app->post('/graphql', function(Request $request, Response $response) use($envconfig) {
+  if (php_sapi_name() === 'cli-server') header("Access-Control-Allow-Origin: *");
   date_default_timezone_set($envconfig['timezone']);
   
   $gql = new Helper\MyGraphQL;
