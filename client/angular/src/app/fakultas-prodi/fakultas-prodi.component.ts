@@ -32,6 +32,7 @@ export class FakultasProdiComponent implements OnInit {
   fakultasList: any[];
   fakultas: FakultasModel;
   prodiList: any[];
+  dosenList: any[];
   viewState = 'fakultas';
 
   loadFakultas(): void {
@@ -79,7 +80,27 @@ export class FakultasProdiComponent implements OnInit {
       this.loading = result.loading;
       this.error = result.errors;
       this.prodiList = result.data.prodiList.prodi;
-      console.log(this.prodiList);
+    });
+  }
+
+  loadDosen(id: number, type: string) {
+    const dosen = gql`
+      {
+        dosenList(${type}: ${id}, limit: 500) {
+          dosen {
+            id
+            nama
+          }
+        }
+      }
+    `;
+    this.apollo.watchQuery<any>({
+      query: dosen
+    })
+    .valueChanges.subscribe(result => {
+      this.loading = result.loading;
+      this.error = result.errors;
+      this.dosenList = result.data.dosenList.dosen;
     });
   }
 
@@ -89,7 +110,7 @@ export class FakultasProdiComponent implements OnInit {
       this.currentFakultas = fakultas;
       const dekan = fakultas.dekan ? fakultas.dekan.id : 0;
       this.fakultas = new FakultasModel(fakultas.id, fakultas.nama, dekan);
-      console.log(this.fakultas);
+      this.loadDosen(fakultas.id, 'fakultas');
     } else {
       this.currentFakultas = null;
       this.fakultas = new FakultasModel(0, '', 0);

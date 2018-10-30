@@ -120,7 +120,8 @@
             <label for="dekan" class="col-md-2 offset-md-3 col-form-label">Pilih Dekan</label>
             <div class="col-md-4">
               <select name="dekan" id="dekan" class="form-control" name="dekan" [(ngModel)]="fakultas.dekan">
-                <option [value]="fakultas.dekan">-- pilih dosen --</option>
+                <option [value]="0">-- pilih dosen --</option>
+                <option [value]="dosen.id" *ngFor="let dosen of dosenList">{{dosen.nama}}</option>
               </select>
             </div>
           </div>

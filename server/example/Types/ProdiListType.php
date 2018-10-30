@@ -56,7 +56,6 @@ class ProdiListType extends ObjectType {
     ];
 
     \extract($params);
-
     \extract($args);
     \extract($context);
 
