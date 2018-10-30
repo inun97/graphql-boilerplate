@@ -1,0 +1,140 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/home">Beranda</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Fakultas &amp; Prodi</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <!-- VIEW FAKULTAS -->
+  <div class="col-md-12" *ngIf="viewState === 'fakultas'">
+    <div class="row">
+      <div class="col-md-10">
+        <h5>Data Fakultas</h5>
+      </div>
+      <div class="col-md-2 text-right mb-2">
+        <button type="button" class="btn btn-primary shadow-sm" (click)="editFakultas()"><fa-icon [icon]="faPlus"></fa-icon> Tambah Fakultas</button>
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>KODE</th>
+          <th>NAMA</th>
+          <th>DEKAN</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="loading">
+        <tr>
+          <td colspan="4" class="text-center">
+            LOADING...
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf=" ! loading">
+        <tr *ngFor="let fakultas of fakultasList">
+          <td>{{fakultas.id}}.</td>
+          <td>{{fakultas.nama}}</td>
+          <td>{{fakultas.dekan.nama}}</td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-primary" (click)="editFakultas(fakultas)"><fa-icon [icon]="faEdit"></fa-icon></button>
+              <button type="button" class="btn btn-sm btn-outline-danger"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+              <button type="button" class="btn btn-sm btn-outline-info" (click)="viewProdi(fakultas)"><fa-icon [icon]="faList"></fa-icon> PRODI</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VIEW PRODI -->
+  <div class="col-md-12" *ngIf="viewState === 'prodi'">
+    <div class="row">
+      <div class="col-md-8">
+        <h5>Data Prodi Fakultas {{currentFakultas.nama}}</h5>
+      </div>
+      <div class="col-md-4 text-right mb-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-dark shadow-sm" (click)="viewState = 'fakultas'"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
+          <button type="button" class="btn btn-primary shadow-sm"><fa-icon [icon]="faPlus"></fa-icon> Tambah Prodi</button>
+        </div>
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>KODE</th>
+          <th>NAMA</th>
+          <th>KETUA</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="loading">
+        <tr>
+          <td colspan="4" class="text-center">
+            LOADING...
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf=" ! loading">
+        <tr *ngFor="let prodi of prodiList">
+          <td>{{prodi.id}}.</td>
+          <td>{{prodi.nama}}</td>
+          <td>{{prodi.ketua.nama}}</td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-primary"><fa-icon [icon]="faEdit"></fa-icon></button>
+              <button type="button" class="btn btn-sm btn-outline-danger"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VIEW EDIT FAKULTAS -->
+  <div class="col-md-12" *ngIf="viewState === 'editfakultas'">
+    <div class="row">
+      <div class="col-md-8">
+        <h5>{{ currentFakultas ? 'Edit Fakultas' : 'Tambah Fakultas' }}</h5>
+      </div>
+      <div class="col-md-4 text-right mb-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-dark shadow-sm" (click)="viewState = 'fakultas'"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
+          <button type="button" class="btn btn-primary shadow-sm"><fa-icon [icon]="faSave"></fa-icon> Simpan Data</button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <form #fakultasForm="ngForm">
+          <div class="form-group row">
+            <label for="nama" class="col-md-2 offset-md-3 col-form-label">Nama Fakultas</label>
+            <div class="col-md-4">
+              <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama Fakultas" [(ngModel)]="fakultas.nama" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="dekan" class="col-md-2 offset-md-3 col-form-label">Pilih Dekan</label>
+            <div class="col-md-4">
+              <select name="dekan" id="dekan" class="form-control" name="dekan" [(ngModel)]="fakultas.dekan">
+                <option [value]="fakultas.dekan">-- pilih dosen --</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 offset-md-8 text-right mb-2">
+        <div class="btn-group">
+          <button type="button" class="btn btn-dark shadow-sm" (click)="viewState = 'fakultas'"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
+          <button type="button" class="btn btn-primary shadow-sm"><fa-icon [icon]="faSave"></fa-icon> Simpan Data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
