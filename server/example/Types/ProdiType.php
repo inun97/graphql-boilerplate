@@ -33,6 +33,7 @@ class ProdiType extends ObjectType {
               \extract($context);
               \extract($values);
               $result = $qb->table('jabatankaprodi')->find($id, 'id_prodi');
+              if (empty($result)) return null;
               return Types::getType('dosen')->resolve(['values' => $result->id_dosen, 'args' => $args, 'context' => $context]);
             }
           ]

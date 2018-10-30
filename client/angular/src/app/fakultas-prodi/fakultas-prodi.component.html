@@ -36,11 +36,11 @@
         <tr *ngFor="let fakultas of fakultasList">
           <td>{{fakultas.id}}.</td>
           <td>{{fakultas.nama}}</td>
-          <td>{{fakultas.dekan.nama}}</td>
+          <td>{{fakultas.dekan?.nama}}</td>
           <td>
             <div class="btn-group">
               <button type="button" class="btn btn-sm btn-outline-primary" (click)="editFakultas(fakultas)"><fa-icon [icon]="faEdit"></fa-icon></button>
-              <button type="button" class="btn btn-sm btn-outline-danger"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteFakultas(fakultas.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
               <button type="button" class="btn btn-sm btn-outline-info" (click)="viewProdi(fakultas)"><fa-icon [icon]="faList"></fa-icon> PRODI</button>
             </div>
           </td>
@@ -82,7 +82,7 @@
         <tr *ngFor="let prodi of prodiList">
           <td>{{prodi.id}}.</td>
           <td>{{prodi.nama}}</td>
-          <td>{{prodi.ketua.nama}}</td>
+          <td>{{prodi.ketua?.nama}}</td>
           <td>
             <div class="btn-group">
               <button type="button" class="btn btn-sm btn-outline-primary"><fa-icon [icon]="faEdit"></fa-icon></button>
@@ -96,20 +96,20 @@
 
   <!-- VIEW EDIT FAKULTAS -->
   <div class="col-md-12" *ngIf="viewState === 'editfakultas'">
-    <div class="row">
-      <div class="col-md-8">
-        <h5>{{ currentFakultas ? 'Edit Fakultas' : 'Tambah Fakultas' }}</h5>
-      </div>
-      <div class="col-md-4 text-right mb-2">
-        <div class="btn-group">
-          <button type="button" class="btn btn-dark shadow-sm" (click)="viewState = 'fakultas'"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
-          <button type="button" class="btn btn-primary shadow-sm"><fa-icon [icon]="faSave"></fa-icon> Simpan Data</button>
+    <form #fakultasForm="ngForm" (ngSubmit)="saveFakultas()">
+      <div class="row">
+        <div class="col-md-8">
+          <h5>{{ currentFakultas ? 'Edit Fakultas' : 'Tambah Fakultas' }}</h5>
+        </div>
+        <div class="col-md-4 text-right mb-2">
+          <div class="btn-group">
+            <button type="button" class="btn btn-dark shadow-sm" (click)="viewState = 'fakultas'"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
+            <button type="submit" class="btn btn-primary shadow-sm" [disabled]="!fakultasForm.form.valid"><fa-icon [icon]="faSave"></fa-icon> Simpan Data</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-5">
-      <div class="col-md-12">
-        <form #fakultasForm="ngForm">
+      <div class="row mt-5">
+        <div class="col-md-12">
           <div class="form-group row">
             <label for="nama" class="col-md-2 offset-md-3 col-form-label">Nama Fakultas</label>
             <div class="col-md-4">
@@ -125,17 +125,17 @@
               </select>
             </div>
           </div>
-        </form>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 offset-md-8 text-right mb-2">
-        <div class="btn-group">
-          <button type="button" class="btn btn-dark shadow-sm" (click)="viewState = 'fakultas'"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
-          <button type="button" class="btn btn-primary shadow-sm"><fa-icon [icon]="faSave"></fa-icon> Simpan Data</button>
         </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="col-md-4 offset-md-8 text-right mb-2">
+          <div class="btn-group">
+            <button type="button" class="btn btn-dark shadow-sm" (click)="viewState = 'fakultas'"><fa-icon [icon]="faChevronLeft"></fa-icon></button>
+            <button type="submit" class="btn btn-primary shadow-sm" [disabled]="!fakultasForm.form.valid"><fa-icon [icon]="faSave"></fa-icon> Simpan Data</button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 
 </div>

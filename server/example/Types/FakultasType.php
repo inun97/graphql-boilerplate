@@ -24,6 +24,7 @@ class FakultasType extends ObjectType {
             \extract($values);
             \extract($context);
             $result = $qb->table('jabatandekan')->find($id, 'id_fakultas');
+            if (empty($result)) return null;
             return Types::getType('dosen')->resolve(['values' => $result->id_dosen, 'args' => $args, 'context' => $context]);
           }
         ]
