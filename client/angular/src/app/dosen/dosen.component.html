@@ -5,6 +5,60 @@
   </ol>
 </nav>
 
-<p>
-  dosen works!
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-10">
+        <form class="form-inline" #formSearch="ngForm">
+          <label for="search-nama" class="sr-only">Nama</label>
+          <div class="input-group mb-2 mr-sm-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><fa-icon [icon]="faSearch"></fa-icon></div>
+            </div>
+            <input type="text" name="nama" id="search-nama" class="form-control" placeholder="Nama Dosen" [(ngModel)]="search.nama" (keyup)="loadDosen()">
+          </div>
+
+          <label for="search-prodi" class="sr-only">Prodi</label>
+          <select name="prodi" id="search-prodi" class="form-control mb-2 mr-sm-2" [(ngModel)]="search.prodi" (change)="loadDosen()">
+            <option [value]="0">-- semua prodi --</option>
+            <option [value]="p.id" *ngFor="let p of prodiList">{{p.nama}}</option>
+          </select>
+        </form>
+      </div>
+      <div class="col-md-2 text-right mb-2">
+        <button type="button" class="btn btn-primary shadow-sm">
+          <fa-icon [icon]="faPlus"></fa-icon> Tambah Dosen
+        </button>
+      </div>
+    </div>
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>NIDN</th>
+          <th>PRODI</th>
+          <th>NAMA</th>
+          <th>TEMPAT/TANGGAL LAHIR</th>
+          <th>ALAMAT</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dosen of dosenList">
+          <td>{{dosen.nidn}}</td>
+          <td>{{dosen.prodi.nama}}</td>
+          <td>{{dosen.nama}}</td>
+          <td>{{dosen.tempat_lahir}}, {{dosen.tanggal_lahir}}</td>
+          <td>{{dosen.alamat}}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end">
+        <li class="page-item" [ngClass]="{ 'disabled': search.page === 1 }"><button class="page-link" type="button" (click)="prevPage()">&laquo;</button></li>
+        <li class="page-item" [ngClass]="{ 'active': i + 1 === search.page }" *ngFor="let i of this.pageRange()"><button class="page-link" type="button" [disabled]="i + 1 === search.page" (click)="gotoPage(i + 1)">{{i + 1}}</button></li>
+        <li class="page-item" [ngClass]="{ 'disabled': search.page === this.pageRange().length }"><button class="page-link" type="button" (click)="nextPage()">&raquo;</button></li>
+      </ul>
+    </nav>
+  </div>
+</div>
