@@ -67,7 +67,16 @@ class QueryType extends ObjectType {
           'resolve' => function($values, $args, $context) use($dosenList) {
             return $dosenList->resolveRows(['values' => $values, 'args' => $args, 'context' => $context]);
           }
-        ]
+        ],
+
+        // 'mahasiswa' => [
+        //   'type' => Types::getType('mahasiswa'),
+        //   'description' => Types::getType('mahasiswa')->description,
+        //   'args' => Types::getType('mahasiswa')->getArguments(),
+        //   'resolve' => function($values, $args, $context) {
+        //     return Types::getType('mahasiswa')->resolve(['values' => $values, 'args' => $args, 'context' => $context]);
+        //   }
+        // ]
 
       ]
     ];

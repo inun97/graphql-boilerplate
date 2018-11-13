@@ -27,7 +27,7 @@ export class DosenComponent implements OnInit {
   loading = true;
   error: any;
 
-  search: SearchModel = new SearchModel('', 0, 1, 5, 0);
+  search: SearchModel = new SearchModel('', 0, 1, 7, 0);
   prodiList: any[];
   dosenList: any[];
 
